@@ -1,4 +1,4 @@
-import { Button , Form, } from "bootstrap";
+import { Button , Form, } from "react-bootstrap";
 import React, { useRef } from "react";
 import classes from "./SignupForm.module.css";
 const SignupForm =(props)=>{
@@ -52,7 +52,7 @@ return(
             required
             />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control 
             type="password"
@@ -61,7 +61,7 @@ return(
             required
             />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control 
             type="Password"
