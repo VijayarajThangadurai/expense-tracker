@@ -70,7 +70,7 @@ return(
             required
             />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={submitHandler}>Submit</Button>
+        <Button variant="primary" type="submit" onClick={submitHandler}>Sign Up</Button>
         </Form>
     </div>
 );
