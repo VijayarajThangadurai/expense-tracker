@@ -1,12 +1,14 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import classes from "./LoginForm.Module.css";
+import AuthContext from "../Store/auth-context";
 
 const LoginForm = (props) => {
   const emailInputRef = useRef();
   const passInputRef = useRef();
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
 
   const submitLoginHandle = async (event) => {
     event.preventDefault();
@@ -28,9 +30,12 @@ const LoginForm = (props) => {
           },
         }
       );
-      navigate("/dummy", { replace: true });
+     const data = await res.json();
+     if(res.ok){
+      navigate("/profile", { replace: true });
+      authCtx.login(data.idToken, data.email);
       console.log("successfullyLogged in");
-      if (!res.ok) {
+     } else {
         throw Error("Authentication Failed");
       }
     } catch (error) {

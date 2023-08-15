@@ -1,13 +1,14 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
 import SigninForm from './Components/LoginForm/SigninForm';
-import Dummy from "./Components/Dummy/Dummy";
+import Profile from './Components/Profile/Profile';
+import UpdateProfileForm from './Components/Profile/UpdateProfileForm';
 function App() {
   return (
     <div className='App'>
       <Routes>
         <Route path='/' element={<SigninForm/>}/>
-        <Route path='/dummy' element={<Dummy/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
   )
