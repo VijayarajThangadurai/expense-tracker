@@ -16,7 +16,7 @@ const AuthContextProvider = (props)=> {
         const logoutHandler =()=>{
           
         }
-        const AuthContext ={
+        const authContext ={
             token: token,
             isLoggedIn: userLoggedIn,
             userEmail: userEmail,
@@ -24,7 +24,7 @@ const AuthContextProvider = (props)=> {
             logout: logoutHandler,
         };
         return (
-            <AuthContext.Provider value={AuthContext}>
+            <AuthContext.Provider value={authContext}>
                 {props.children}
             </AuthContext.Provider>
         )

@@ -1,18 +1,29 @@
-import React, { useRef } from "react";
+import React, { useEffect,useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import classes from "./UpdateProfileForm.module.css";
 
 const UpdateProfileForm = (props) => {
   const formRef = useRef();
+  const emailInputRef= useRef();
   const nameInputRef = useRef();
   const contactInputRef = useRef();
   const locationInputRef = useRef();
+  console.log(props.user);
+ 
+  useEffect(()=>{
+    if(props.user){
+      nameInputRef.current.value = props.user.displayName;
+      emailInputRef.current.value= props.user.email;
+    }
+    },[props.user])
+
 
   const clickUpdateHandler = async (event) => {
       event.preventDefault();
     const enteredName = nameInputRef.current.value;
     const enteredContact = contactInputRef.current.value;
     const enteredLocation = locationInputRef.current.value;
+
 
 
     try {
@@ -32,7 +43,7 @@ const UpdateProfileForm = (props) => {
             },
           }
         );
-        const upData = await res.json();
+        // const upData = await res.json();
         if (res.ok) {
           alert("Profile Updated");
         } else {
@@ -48,6 +59,10 @@ const UpdateProfileForm = (props) => {
       <section className={classes.updateForm}>
         <h1>Update profile</h1>
         <Form ref={formRef}>
+        <Form.Group className={classes["mb-3"]}>
+            <Form.Label className={classes.label}>Email:</Form.Label>
+            <Form.Control placeholder="Email" ref={emailInputRef} />
+          </Form.Group>
           <Form.Group className={classes["mb-3"]}>
             <Form.Label className={classes.label}>Full Name:</Form.Label>
             <Form.Control placeholder="Full Name" ref={nameInputRef} />
