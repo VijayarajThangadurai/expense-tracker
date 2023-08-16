@@ -5,14 +5,28 @@
   
   .proCon p {
     align-items: flex-start;
+    border-bottom: 2px solid black;
   }
   
+  .headerDetail{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between !important;
+
+  }
+  .headerDetail span {
+    margin-left: 55rem;
+  }
+
   .header {
-      border-bottom: 2px solid black;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     font-style: italic;
+    margin-right: 1rem;
+    margin-left: 1rem;
   }
   
   .incomplete {

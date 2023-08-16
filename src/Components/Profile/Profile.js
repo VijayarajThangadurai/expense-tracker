@@ -1,20 +1,22 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 
 import classes from "./Profile.module.css";
 import UpdateProfileForm from "./UpdateProfileForm";
+import { Button } from "react-bootstrap";
 
 const Profile = (props) => {
   const [updateVisible, setUpdateVisible] = useState(false);
   const authCtx = useContext(AuthContext);
   const [userData, setUserData]= useState(null);
+  const navigate = useNavigate();
 
   const updateVisibleHandler = async() => {
     setUpdateVisible(true);
     try{
         const res = await fetch(
-            "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=[API_KEY]",{
+            "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCQd8OqBeYkMSc2IPzMzCxiJVo_6D8hFwY",{
                 method: 'POST',
                 headers:{
                     "Content-Type": "application/json",
@@ -30,9 +32,16 @@ const Profile = (props) => {
         alert(error);
     }
 };
+
+const clickLogoutHandler =()=>{
+  authCtx.logout();
+  navigate('/',{replace: true});
+};
 return (
-  <div className={classes.proCon}>
+  <Fragment>
+  <section className={classes.proCon}>
     <div className={classes.header}>
+      <div className={classes.headerDetail}>
       <p>Welcome to Expense tracker</p>
       <span className={classes.incomplete}>
         {!updateVisible
@@ -40,10 +49,15 @@ return (
           :( <React.Fragment>Your profile <strong>x%</strong> completed.</React.Fragment>)}
         <Link onClick={updateVisibleHandler}>Complete now</Link>
       </span>
-
-    </div>
+</div>
+<div>
+  <Button varient="danger" onClick={clickLogoutHandler}>Log Out</Button>
+</div>
+</div>
+    </section>
     {updateVisible && <UpdateProfileForm  user ={userData} />}
-  </div>
+
+  </Fragment>
 );
 };
 
