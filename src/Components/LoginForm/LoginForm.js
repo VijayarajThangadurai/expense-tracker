@@ -1,15 +1,16 @@
-import React, { useContext, useRef } from "react";
-import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useRef, useState } from "react";
+import { Button , Form} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./LoginForm.Module.css";
 import AuthContext from "../Store/auth-context";
+import ForgotPassForm from "./ForgotPassForm";
 
 const LoginForm = (props) => {
   const emailInputRef = useRef();
   const passInputRef = useRef();
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
-
+const [forgotVisible, setForgotVisible]= useState(false);
   const submitLoginHandle = async (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
@@ -43,7 +44,15 @@ const LoginForm = (props) => {
     }
   };
 
+  const linkClickHandler=()=>{
+    setForgotVisible(true);
+  };
+
   return (
+    <>
+    {forgotVisible? (
+      <ForgotPassForm onReset={()=>setForgotVisible(false)}/>
+    ):(
     <div className={classes.login}>
       <h1>Log In</h1>
       <Form>
@@ -63,11 +72,16 @@ const LoginForm = (props) => {
             required
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+<Link onClick={linkClickHandler}>Forgot Password?</Link>
+        </Form.Group>
         <Button variant="primary" type="submit" onClick={submitLoginHandle}>
           Log in
         </Button>
       </Form>
     </div>
+    )}
+    </>
   );
 };
 
