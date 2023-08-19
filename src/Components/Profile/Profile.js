@@ -1,19 +1,17 @@
 import React, { Fragment, useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
-
 import classes from "./Profile.module.css";
 import UpdateProfileForm from "./UpdateProfileForm";
 import { Button } from "react-bootstrap";
 
 const Profile = (props) => {
-  const [updateVisible, setUpdateVisible] = useState(false);
   const authCtx = useContext(AuthContext);
   const [userData, setUserData]= useState(null);
   const navigate = useNavigate();
-
+  const location= useLocation();
+  const isLocation = location.pathname ==="/profile";
   const updateVisibleHandler = async() => {
-    setUpdateVisible(true);
     try{
         const res = await fetch(
             "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCQd8OqBeYkMSc2IPzMzCxiJVo_6D8hFwY",{
@@ -31,6 +29,7 @@ const Profile = (props) => {
     } catch(error){
         alert(error);
     }
+    navigate("/profile", {replace:true});
 };
 
 const clickLogoutHandler =()=>{
@@ -44,10 +43,10 @@ return (
       <div className={classes.headerDetail}>
       <p>Welcome to Expense tracker</p>
       <span className={classes.incomplete}>
-        {!updateVisible
+        {!isLocation
           ? ("Your Profile is incomplete. ")
           :( <React.Fragment>Your profile <strong>x%</strong> completed.</React.Fragment>)}
-        <Link onClick={updateVisibleHandler}>Complete now</Link>
+        <Button onClick={updateVisibleHandler}>Complete now</Button>
       </span>
 </div>
 <div>
@@ -55,7 +54,7 @@ return (
 </div>
 </div>
     </section>
-    {updateVisible && <UpdateProfileForm  user ={userData} />}
+    {isLocation && <UpdateProfileForm  user ={userData} />}
 
   </Fragment>
 );

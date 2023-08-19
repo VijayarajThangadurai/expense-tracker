@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import AuthContext from "./auth-context";
 
 const AuthContextProvider = (props)=> {
-    const [token, setToken] = useState(null);
-    const [userEmail,setUserEmail] = useState(null);
-    if(token == null && localStorage.length !== 0){
+    const [token, setToken] = useState("");
+    const [userEmail,setUserEmail] = useState("");
+    if(token === "" && localStorage.length !== 0){
         setToken(localStorage["user"]);
     }
     const userLoggedIn = !!token;
@@ -14,8 +14,8 @@ const AuthContextProvider = (props)=> {
             localStorage.setItem('user', tokenId);
         };
         const logoutHandler =()=>{
-          setToken(null);
-          setUserEmail(null);
+          setToken("");
+          setUserEmail("");
           localStorage.removeItem('user');
         }
         const authContext ={

@@ -1,8 +1,8 @@
-.auth {
+.expenseCon {
     margin: 3rem auto;
     /* width: 95%; */
-    margin-top: 8rem;
-    max-width: 30rem;
+    margin-top: 0.25rem;
+    max-width: 50rem;
     border-radius: 6px;
     background-color: rgba(114, 190, 235, 0.5);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -11,10 +11,14 @@
     color: rgb(20, 19, 19);
     font-family: Arial, Helvetica, sans-serif;
 }
-
-.switchCon button {
-    border: none;
-    background: none;
-    color:blue;
-    padding:0;
+.expenseCon section {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+input {
+    width: 120px;
+}
+label{
+    margin: 5px;
 }
