@@ -39,3 +39,24 @@
     box-shadow: 0 2px 4px rgba(130, 73, 163, 0.4);
     background-color: rgba(130, 73, 163, 0.4);
 }
+.btn {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.btn button {
+    height: 40px;
+    width: 40px;
+    margin: 0.5rem;
+}
+
+.edit {
+    color: white;
+    background-color: rgb(48, 163, 48);
+}
+
+.dlt {
+    color: white;
+    background-color: rgb(112, 32, 32);
+}

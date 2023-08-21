@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import ExpenseContext from "../Store/expense-context";
 import classes from "./ExpenseForm.module.css";
@@ -9,19 +9,33 @@ const amountInputRef = useRef();
 const descriptionInputRef= useRef();
 const dateRef = useRef();
 const categoryRef=useRef();
+const formRef = useRef();
 
 const expCtx = useContext(ExpenseContext);
 const authCtx= useContext(AuthContext);
-console.log(authCtx.userEmail);
+useEffect(()=>{
+    if(expCtx.editItems !== ""){
+        amountInputRef.current.value = expCtx.editItems.enteredAmount
+        descriptionInputRef.current.value = expCtx.editItems.enteredDescription
+        dateRef.current.value= expCtx.editItems.date
+        categoryRef.current.value= expCtx.editItems.category
+    }
+},[expCtx.editItems])
+
 const clickAddHandler = async e =>{
     e.preventDefault();
+    if(expCtx.editItems!== ""){
+        expCtx.removeItem(expCtx.editItems);
+        expCtx.editItems={};
+    }
     const expDetail = {
+        id: Math.random().toString(),
         enteredAmount: amountInputRef.current.value,
         enteredDescription: descriptionInputRef.current.value,
         date: dateRef.current.value,
         category: categoryRef.current.value,
     };
-    console.log(expDetail);
+     formRef.current.reset();
     const email= authCtx.userEmail.replace(/[\.@]/g,"");
     try{
         const res = await axios.post(`https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}expenses.json`,expDetail)
@@ -29,10 +43,11 @@ const clickAddHandler = async e =>{
 alert(error)
     }
     expCtx.addItem(expDetail);
+    formRef.current.reset();
 }
 return(
     <section className={classes.expenseCon}>
-        <form>
+        <form ref={formRef}>
             <section>
                 <div className={classes.amt}>
                     <label htmlFor="Amount">Amount</label>

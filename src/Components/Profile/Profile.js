@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import {  useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 import classes from "./Profile.module.css";
@@ -29,32 +29,47 @@ const Profile = (props) => {
     } catch(error){
         alert(error);
     }
-    navigate("/profile", {replace:true});
 };
+useEffect(()=>{
+  updateVisibleHandler()
+},[]);
 
 const clickLogoutHandler =()=>{
   authCtx.logout();
   navigate('/',{replace: true});
 };
-return (
+const clickExpenseHandler=()=>{
+navigate("/profile/expense-tracker",{replace:true});
+}
+;return (
   <Fragment>
   <section className={classes.proCon}>
     <div className={classes.header}>
       <div className={classes.headerDetail}>
-      <p>Welcome to Expense tracker</p>
+      <h6>Welcome to Expense tracker</h6>
+      <Button 
+      variant="success"
+      onClick={clickExpenseHandler}
+      className={classes.expenseBtn}
+      >
+        Expense Tracker
+      </Button>
+      </div>
       <span className={classes.incomplete}>
         {!isLocation
           ? ("Your Profile is incomplete. ")
           :( <React.Fragment>Your profile <strong>x%</strong> completed.</React.Fragment>)}
-        <Button onClick={updateVisibleHandler}>Complete now</Button>
+        <button onClick={()=>navigate('/profile',{replace:true})}>Complete now</button>
       </span>
-</div>
+      <div>
+
+      </div>
 <div>
   <Button varient="danger" onClick={clickLogoutHandler}>Log Out</Button>
 </div>
 </div>
     </section>
-    {isLocation && <UpdateProfileForm  user ={userData} />}
+    {isLocation && <UpdateProfileForm  user ={userData} update={updateVisibleHandler} />}
 
   </Fragment>
 );

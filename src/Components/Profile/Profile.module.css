@@ -34,6 +34,11 @@
     background-color: rgba(214, 119, 63, 0.4);
     border-radius: 15px;
     padding: 0.25rem;
+    margin-left: 15rem;
+  }
+
+  expenseBtn{
+    margin-left: 30rem;
   }
 
   @media (max-width: 768px){

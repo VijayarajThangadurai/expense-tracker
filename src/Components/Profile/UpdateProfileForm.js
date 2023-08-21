@@ -12,7 +12,7 @@ const UpdateProfileForm = (props) => {
  
   useEffect(()=>{
     if(props.user){
-      if(props.user.displayName !== undefined){
+      if(props.user.displayName){
       nameInputRef.current.value = props.user.displayName;
       }
       emailInputRef.current.value= props.user.email;
@@ -48,6 +48,9 @@ const UpdateProfileForm = (props) => {
         // const upData = await res.json();
         if (res.ok) {
           alert("Profile Updated");
+          props.update();
+          nameInputRef.current.value = props.user.displayName;
+          emailInputRef.current.value=props.user.email;
         } else {
           throw new Error("Upadation failed!. Please try again.");
         }
