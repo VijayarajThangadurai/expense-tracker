@@ -1,12 +1,17 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {  useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 import classes from "./Profile.module.css";
 import UpdateProfileForm from "./UpdateProfileForm";
 import { Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../Store/auth-slice";
+import { expenseActions } from "../Store/expense-slice";
 
 const Profile = (props) => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const auth = useSelector((state)=>state.auth);
   const [userData, setUserData]= useState(null);
   const navigate = useNavigate();
   const location= useLocation();
@@ -20,7 +25,7 @@ const Profile = (props) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    idToken: authCtx.token,
+                    idToken: auth.token,
                 }),
             }
         );
@@ -35,7 +40,9 @@ useEffect(()=>{
 },[]);
 
 const clickLogoutHandler =()=>{
-  authCtx.logout();
+  // authCtx.logout();
+  dispatch(authActions.logout());
+  dispatch(expenseActions.setItemsEmpty());
   navigate('/',{replace: true});
 };
 const clickExpenseHandler=()=>{

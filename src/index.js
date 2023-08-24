@@ -6,13 +6,17 @@ import App from './App';
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from 'react-router-dom';
 import AuthContextProvider from './Components/Store/AuthContextProvider';
+import { Provider } from 'react-redux';
+import store from './Components/Store';
 // import ExpenseProvider from './Components/Store/ExpenseContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <AuthContextProvider>
   <BrowserRouter>
+  <Provider store={store}>
     <App />
+    </Provider>
   </BrowserRouter>
   </AuthContextProvider>
   

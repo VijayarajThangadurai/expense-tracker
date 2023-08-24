@@ -11,26 +11,26 @@ const ExpenseProvider = (props)=>{
 
   
 
-  const restoreItems = async () => {
-    const email = authCtx.userEmail.replace(/[\.@]/g, "");
-    try {
-      const res = await axios.get(`https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}expenses.json`)
-      const data = res.data;
-      if(data){
-        const realData = Object.values(data).reverse();
-        setItemsArr(realData);
-      }
+  // const restoreItems = async () => {
+  //   const email = authCtx.userEmail.replace(/[\.@]/g, "");
+  //   try {
+  //     const res = await axios.get(`https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}expenses.json`)
+  //     const data = res.data;
+  //     if(data){
+  //       const realData = Object.values(data).reverse();
+  //       setItemsArr(realData);
+  //     }
   
-    } catch(error){
-      alert(error)
-    }
-  };
-  useEffect(() => {
-    if(authCtx.userEmail!==""){
-    restoreItems();
-  }
+  //   } catch(error){
+  //     alert(error)
+  //   }
+  // };
+  // useEffect(() => {
+  //   if(authCtx.userEmail!==""){
+  //   restoreItems();
+  // }
  
-  },[authCtx.userEmail]);
+  // },[authCtx.userEmail]);
       const addItemHandler =(item)=>{
         setItemsArr([item, ...itemsArr]);
     };
@@ -65,7 +65,7 @@ const ExpenseProvider = (props)=>{
         addItem: addItemHandler,
         removeItem:removeItemHandler,
         editItem: editItemHandler,
-        onLogin: restoreItems
+        // onLogin: restoreItems
     };
     return(
         <ExpenseContext.Provider value={expenseContext}>

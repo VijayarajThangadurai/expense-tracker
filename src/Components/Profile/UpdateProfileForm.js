@@ -8,7 +8,7 @@ const UpdateProfileForm = (props) => {
   const nameInputRef = useRef();
   const contactInputRef = useRef();
   const locationInputRef = useRef();
-  console.log(props.user);
+  // console.log(props.user);
  
   useEffect(()=>{
     if(props.user){

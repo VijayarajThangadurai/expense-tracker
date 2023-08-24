@@ -37,6 +37,14 @@
     margin-left: 15rem;
   }
 
+  .incomplete button{
+    background: none;
+    border: none;
+    color: blue;
+    padding: 0;
+    border-bottom: 1px solid blue;
+  }
+
   expenseBtn{
     margin-left: 30rem;
   }
