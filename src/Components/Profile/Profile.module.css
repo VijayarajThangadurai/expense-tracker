@@ -49,6 +49,18 @@
     margin-left: 30rem;
   }
 
+
+  .mode{
+    padding: 2px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .mode button{
+    background: none;
+    border: none;
+    display: flex;
+    align-items: flex-end;
+  }
   @media (max-width: 768px){
     .proCon{
       width: 100%;

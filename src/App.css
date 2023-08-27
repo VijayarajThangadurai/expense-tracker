@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.darkTheme{
+  background-color: rgb(39,36,36);
+  color: white;
+}
+
+.lightTheme{
+  background-color: white;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

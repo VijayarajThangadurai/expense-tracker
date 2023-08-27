@@ -1,17 +1,20 @@
 import React, { Fragment, useEffect, useState } from "react";
 import {  useLocation, useNavigate } from "react-router-dom";
-import AuthContext from "../Store/auth-context";
 import classes from "./Profile.module.css";
 import UpdateProfileForm from "./UpdateProfileForm";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Store/auth-slice";
 import { expenseActions } from "../Store/expense-slice";
+import {MdModeNight} from "react-icons/md";
+import { themeActions } from "../Store/theme-slice";
+import {BsSunFill} from "react-icons/bs";
 
 const Profile = (props) => {
   // const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
   const auth = useSelector((state)=>state.auth);
+  const isDarkMode = useSelector((state)=>state.theme.isDark);
   const [userData, setUserData]= useState(null);
   const navigate = useNavigate();
   const location= useLocation();
@@ -41,6 +44,9 @@ useEffect(()=>{
 
 const clickLogoutHandler =()=>{
   // authCtx.logout();
+  if(isDarkMode=== true){
+    dispatch(themeActions.toggelTheme());
+  }
   dispatch(authActions.logout());
   dispatch(expenseActions.setItemsEmpty());
   navigate('/',{replace: true});
@@ -48,7 +54,10 @@ const clickLogoutHandler =()=>{
 const clickExpenseHandler=()=>{
 navigate("/profile/expense-tracker",{replace:true});
 }
-;return (
+const clickModeHandler = async()=>{
+  dispatch(themeActions.toggelTheme());
+};
+return (
   <Fragment>
   <section className={classes.proCon}>
     <div className={classes.header}>
@@ -62,15 +71,24 @@ navigate("/profile/expense-tracker",{replace:true});
         Expense Tracker
       </Button>
       </div>
+      <div className={classes.mode}>
+      {auth.isPremium && (
+        <button onClick={clickModeHandler}>
+          {isDarkMode ? (
+            <BsSunFill style ={{color:"white"}}/>
+          ):(
+            <MdModeNight/>
+          )}
+          </button>
+          )}
+      </div>
       <span className={classes.incomplete}>
         {!isLocation
           ? ("Your Profile is incomplete. ")
           :( <React.Fragment>Your profile <strong>x%</strong> completed.</React.Fragment>)}
         <button onClick={()=>navigate('/profile',{replace:true})}>Complete now</button>
       </span>
-      <div>
-
-      </div>
+     
 <div>
   <Button varient="danger" onClick={clickLogoutHandler}>Log Out</Button>
 </div>

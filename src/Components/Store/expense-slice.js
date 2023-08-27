@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { UseSelector } from "react-redux/es/hooks/useSelector";
 
 const initialState ={
     items:[],
@@ -20,13 +19,16 @@ const expenseSlice = createSlice({
         },
         editItems(state,action){
             state.editItems = action.payload.item;
-            state.items = action.payload;
+            state.items = action.payload.filtered;
         },
         setItems(state, action){
             state.items = action.payload;
         },
       setEditItemsNull(state){
-        state.items =[];
+        state.editItems =0;
+      },
+      setItemsEmpty(state){
+        state.items = [];
       }
     },
 });

@@ -3,7 +3,7 @@ import { Button , Form} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./LoginForm.Module.css";
 import ForgotPassForm from "./ForgotPassForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Store/auth-slice";
 
 const LoginForm = (props) => {
@@ -14,6 +14,7 @@ const LoginForm = (props) => {
 const [forgotVisible, setForgotVisible]= useState(false);
 
 const  dispatch = useDispatch();
+const auth= useSelector((state)=>state.auth);
 const submitLoginHandle = async (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
@@ -40,6 +41,15 @@ const submitLoginHandle = async (event) => {
       dispatch(
        authActions.login({tokenId: data.idToken, email: data.email})
       );
+      const email = enteredEmail.replace(/[\.@]/g,"");
+      const modeRes = await axios.get(
+        `https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}/userDetail.json`
+      );
+      if(modeRes.data){
+        dispatch(themeActions.toggelTheme());
+        dispatch(authActions.setIsPremium());
+        localStorage.setItem("isPremium", true);
+      }
      } else {
         throw Error("Authentication Failed");
       }

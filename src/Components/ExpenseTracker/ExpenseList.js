@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import ExpenseContext from "../Store/expense-context";
 import classes from "./ExpenseList.module.css";
 import {AiFillEdit, AiFillDelete} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../Store/expense-slice";
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import {FaCrown} from "react-icons/fa";
+import { authActions } from "../Store/auth-slice";
+import { themeActions } from "../Store/theme-slice";
 const ExpenseList =(props)=>{
     // const expCtx=useContext(ExpenseContext);
 const dispatch= useDispatch();
@@ -64,13 +66,58 @@ const expense = useSelector((state)=>state.expenseStore);
     expense.items.forEach((element)=>{
         total+= Number(element.enteredAmount);
     });
+
+    const clickAccountPremiumHandler = async ()=>{
+        dispatch(themeActions.toggelTheme());
+        const email = auth.userEmail.replace(/[\.@]/g,"");
+        try{
+            const res = await axios.post(`https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}/userDetail.json`, {isPremium: true});
+        }catch (error){
+            alert(error)
+        }
+        dispatch(authActions.setIsPremium());
+        localStorage.setItem('isPremium', true);
+    };
+    const clickDownloadHandler=()=>{
+        const generateCSV =( itemsArr)=>{
+            const csvRows =[];
+            const headers =['Date','Description','Category','Amount'];
+            csvRows.push(headers.join(','));
+
+            itemsArr.forEach((i)=>{
+                const row =[
+                    i.date,
+                    i.enteredDescription,
+                    i.category,
+                    i.enteredAmount
+                ];
+                csvRows.push(row.join(","));
+            });
+            return csvRows.join("\n");
+        };
+        const csvContent = generateCSV(expense.items);
+        const blob= new Blob([csvContent],{type:"text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = "expenses.csv";
+        downloadLink.click();
+    };
     return (
         <section className={classes.listCon}>
         <div className={classes.container}>
         <h1>Expenses</h1>
         <div className={classes.totalAmt}>
             <h3>Total Expense</h3>
-            {total>=10000 && <Button variant="danger">Activate Premium</Button>}
+            {total>=10000 && 
+            (!auth.isPremium ? (
+            <Button variant="danger" onClick={clickAccountPremiumHandler}>
+                Activate Premium
+                </Button>
+            ):(
+                <Button variant="warning" onClick={clickDownloadHandler}>
+                    <FaCrown/>Download
+                </Button>
+            ))}
             <span>{total}</span>
         </div>
         {total>=10000 && <p style={{color:'red'}}>* Please Activate Premium Total Expense is More Than 10000</p>}

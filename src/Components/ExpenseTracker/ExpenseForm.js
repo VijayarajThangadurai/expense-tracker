@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
-import ExpenseContext from "../Store/expense-context";
 import classes from "./ExpenseForm.module.css";
-import AuthContext from "../Store/auth-context";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../Store/expense-slice";
 const ExpenseForm =()=>{
@@ -15,9 +13,8 @@ const formRef = useRef();
 const auth = useSelector((state)=> state.auth);
 const dispatch = useDispatch();
 const expense = useSelector((state)=> state.expenseStore);
-console.log(expense.editItems);
 useEffect(()=>{
-    if(expense.editItems !== null){
+    if(expense.editItems !== 0){
         amountInputRef.current.value = expense.editItems.enteredAmount
         descriptionInputRef.current.value = expense.editItems.enteredDescription
         dateRef.current.value= expense.editItems.date
@@ -27,7 +24,7 @@ useEffect(()=>{
 
 const clickAddHandler = async (e) =>{
     e.preventDefault();
-    if(expense.editItems!== ""){
+    if(expense.editItems!== 0){
        dispatch(expenseActions.removeItem(expense.editItems));
        dispatch(expenseActions.setEditItemsNull());
     }
@@ -39,7 +36,7 @@ const clickAddHandler = async (e) =>{
         category: categoryRef.current.value,
     };
      formRef.current.reset();
-    const email= auth.userEmail.replace(/[\.@]/g,"");
+    const email= auth.userEmail.replace(/[\.@]/g, "");
     try{
         const res = await axios.post(`https://expense-tracker-608fc-default-rtdb.firebaseio.com/${email}expenses.json`,expDetail)
     }catch(error){
