@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialAuthState={
     token: localStorage.getItem('user'),
     userEmail:localStorage.getItem('userEmail'),
-    isPremium:localStorage.getItem('isPremium')
+    isPremium:localStorage.getItem('isPremium'),
+    isLoggedIn: localStorage.getItem('isLoggedIn')
 };
 
 const authSlice = createSlice({
@@ -15,6 +16,8 @@ const authSlice = createSlice({
         state.userEmail= action.payload.email;
         localStorage.setItem("user",action.payload.tokenId);
         localStorage.setItem("userEmail", action.payload.email);
+        state.isLoggedIn = true;
+        localStorage.setItem('isLoggedIn', true);
       
         },
         logout(state){
@@ -23,8 +26,10 @@ const authSlice = createSlice({
             localStorage.removeItem("user");
             localStorage.removeItem("userEmail");
             state.isPremium = false;
+            state.isLoggedIn = true;
             localStorage.removeItem('isPremium');
             localStorage.removeItem('isDark');
+            localStorage.removeItem('isLoggedIn');
         },
         setIsPremium(state){
             state.isPremium = true;

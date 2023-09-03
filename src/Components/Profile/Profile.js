@@ -4,10 +4,10 @@ import classes from "./Profile.module.css";
 import UpdateProfileForm from "./UpdateProfileForm";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../Store/auth-slice";
-import { expenseActions } from "../Store/expense-slice";
+import { authActions } from "../../Store/auth-slice";
+import { expenseActions } from "../../Store/expense-slice";
 import {MdModeNight} from "react-icons/md";
-import { themeActions } from "../Store/theme-slice";
+import { themeActions } from "../../Store/theme-slice";
 import {BsSunFill} from "react-icons/bs";
 
 const Profile = (props) => {
@@ -62,7 +62,12 @@ return (
   <section className={classes.proCon}>
     <div className={classes.header}>
       <div className={classes.headerDetail}>
-      <h6>Welcome to Expense tracker</h6>
+      <h4 style={{color:"#fff"}}>Welcome to Expense tracker</h4>
+      <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"/>
+      <h5>
+      {userData !== null && userData.displayName !== undefined ? userData.displayName : "unknown"}
+      </h5>
       <Button 
       variant="success"
       onClick={clickExpenseHandler}
@@ -93,9 +98,10 @@ return (
   <Button varient="danger" onClick={clickLogoutHandler}>Log Out</Button>
 </div>
 </div>
-    </section>
+    </section >
+    <section className={classes.sectionLower}>
     {isLocation && <UpdateProfileForm  user ={userData} update={updateVisibleHandler} />}
-
+    </section>
   </Fragment>
 );
 };

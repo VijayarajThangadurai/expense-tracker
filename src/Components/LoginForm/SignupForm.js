@@ -30,9 +30,9 @@ const submitHandler = async(event)=>{
                 },
             } 
             );
-            // console.log("Succesfully signed up");
-            // alert("Successfully signed up")
             const data = await res.json();
+             console.log(data);
+            // alert("Successfully signed up")
             if(res.ok){
                 try{
                     const response = await fetch(
@@ -86,7 +86,7 @@ return(
             <Form.Label>Password</Form.Label>
             <Form.Control 
             type="password"
-            placeholder="password"
+            placeholder="password(Use More Than 6 letters)"
             ref={passInputRef}
             required
             />

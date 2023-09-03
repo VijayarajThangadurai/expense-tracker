@@ -2,12 +2,12 @@ import React, { useContext, useEffect } from "react";
 import classes from "./ExpenseList.module.css";
 import {AiFillEdit, AiFillDelete} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { expenseActions } from "../Store/expense-slice";
+import { expenseActions } from "../../Store/expense-slice";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import {FaCrown} from "react-icons/fa";
-import { authActions } from "../Store/auth-slice";
-import { themeActions } from "../Store/theme-slice";
+import { authActions } from "../../Store/auth-slice";
+import { themeActions } from "../../Store/theme-slice";
 const ExpenseList =(props)=>{
     // const expCtx=useContext(ExpenseContext);
 const dispatch= useDispatch();
@@ -107,7 +107,7 @@ const expense = useSelector((state)=>state.expenseStore);
         <div className={classes.container}>
         <h1>Expenses</h1>
         <div className={classes.totalAmt}>
-            <h3>Total Expense</h3>
+            <h3>Total Expense<span>₹{total}</span></h3>
             {total>=10000 && 
             (!auth.isPremium ? (
             <Button variant="danger" onClick={clickAccountPremiumHandler}>
@@ -115,10 +115,9 @@ const expense = useSelector((state)=>state.expenseStore);
                 </Button>
             ):(
                 <Button variant="warning" onClick={clickDownloadHandler}>
-                    <FaCrown/>Download
+                    <FaCrown/>Download List
                 </Button>
             ))}
-            <span>{total}</span>
         </div>
         {total>=10000 && <p style={{color:'red'}}>* Please Activate Premium Total Expense is More Than 10000</p>}
         </div>
@@ -128,7 +127,7 @@ const expense = useSelector((state)=>state.expenseStore);
                      <div className={classes.date}>{i.date}</div>
                      <h3 className={classes.category}>{i.category.toUpperCase()}</h3>
                      <div className={classes.des}>{i.enteredDescription}</div>
-                     <div className={classes.Amt}>{i.enteredAmount}</div>
+                     <div className={classes.Amt}>₹{i.enteredAmount}</div>
                      <div className={classes.btn}>
                         <button className={classes.edit} onClick={()=>editClickHandler(i)}>
                             <AiFillEdit/>

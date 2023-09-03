@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .darkTheme{
@@ -8,9 +9,11 @@
 }
 
 .lightTheme{
-  background-color: white;
+  height: 100vh;
+  overflow: auto;
+  color: white;
+  background-image: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
