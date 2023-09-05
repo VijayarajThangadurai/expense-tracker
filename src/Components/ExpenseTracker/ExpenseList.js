@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import classes from "./ExpenseList.module.css";
 import {AiFillEdit, AiFillDelete} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";

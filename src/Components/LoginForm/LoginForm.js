@@ -204,7 +204,7 @@ const submitLoginHandle = async (event) => {
       
       
       ">
-        <Form.Group className="mb-3 " controlId="formBasicEmail">
+        <Form.Group className="container mt-4 " controlId="formBasicEmail">
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -212,7 +212,7 @@ const submitLoginHandle = async (event) => {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="container mt-4" controlId="formBasicPassword">
           <Form.Control
             type="password"
             placeholder="Password"

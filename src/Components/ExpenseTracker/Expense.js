@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import ExpenseList from "./ExpenseList";
+import ExpenseList from "./ExpenseList.js";
 import ExpenseForm from "./ExpenseForm";
 const Expense = ()=>{
     return (
